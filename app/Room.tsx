@@ -13,7 +13,10 @@ export function Room({ children }: { children: ReactNode }) {
       publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY!}
       throttle={16}
     >
-      <RoomProvider id="my-room" initialPresence={{ cursor: null }}>
+      <RoomProvider
+        id="my-room"
+        initialPresence={{ cursor: null, message: "" }}
+      >
         <ClientSideSuspense fallback={<div>Loading…</div>}>
           {children}
         </ClientSideSuspense>
