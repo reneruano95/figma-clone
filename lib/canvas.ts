@@ -10,8 +10,8 @@ import {
   CanvasPathCreated,
   CanvasSelectionCreated,
   RenderCanvas,
-} from "@/types/type";
-import { defaultNavElement } from "@/constants";
+} from "@/lib/types/type";
+import { defaultNavElement } from "@/lib/constants";
 import { createSpecificShape } from "./shapes";
 
 // initialize fabric canvas
