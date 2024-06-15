@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
+import { Room } from "./Room";
 import "./globals.css";
 
 const workSans = Work_Sans({
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.className} bg-primary-grey-200`}>
-        {children}
+        <Room>{children}</Room>
       </body>
     </html>
   );
