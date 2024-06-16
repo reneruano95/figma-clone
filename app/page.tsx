@@ -16,11 +16,19 @@ import {
   renderCanvas,
 } from "@/lib/canvas";
 import { ActiveElement } from "@/lib/types/type";
-import { useMutation, useStorage } from "@liveblocks/react/suspense";
+import {
+  useMutation,
+  useRedo,
+  useStorage,
+  useUndo,
+} from "@liveblocks/react/suspense";
 import { defaultNavElement } from "@/lib/constants";
-import { handleDelete } from "@/lib/key-events";
+import { handleDelete, handleKeyDown } from "@/lib/key-events";
 
 export default function Page() {
+  const redo = useRedo();
+  const undo = useUndo();
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fabricRef = useRef<fabric.Canvas | null>(null);
   const isDrawing = useRef(false);
@@ -109,6 +117,16 @@ export default function Page() {
     window.addEventListener("resize", () => {
       handleResize({ canvas: fabricRef.current });
     });
+    window.addEventListener("keydown", (event) => {
+      handleKeyDown({
+        e: event,
+        canvas: fabricRef.current,
+        undo,
+        redo,
+        syncShapeInStorage,
+        deleteShapeFromStorage,
+      });
+    });
 
     return () => {
       canvas.dispose();
@@ -150,7 +168,7 @@ export default function Page() {
       />
 
       <section className="h-full flex flex-row">
-        <LeftSidebar allShapes={[]} />
+        <LeftSidebar allShapes={Array.from(canvasObjects)} />
         <Live canvasRef={canvasRef} />
         <RightSidebar />
       </section>
