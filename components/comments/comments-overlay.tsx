@@ -13,7 +13,7 @@ import { useMaxZIndex } from "@/lib/useMaxZIndex";
 import { PinnedThread } from "./pinned-thread";
 
 type OverlayThreadProps = {
-  thread: ThreadData<ThreadMetadata>;
+  thread: ThreadData;
   maxZIndex: number;
 };
 
