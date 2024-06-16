@@ -6,7 +6,7 @@ import { ThreadData } from "@liveblocks/client";
 import { Thread } from "@liveblocks/react-ui";
 
 type Props = {
-  thread: ThreadData<ThreadMetadata>;
+  thread: ThreadData;
   onFocus: (threadId: string) => void;
 };
 
