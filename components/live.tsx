@@ -18,7 +18,10 @@ import { CursorChat } from "./cursor/cursor-chat";
 import { ReactionSelector } from "./reaction/reaction-selector";
 import { FlyingReaction } from "./reaction/flying-reaction";
 
-export const Live = () => {
+type LiveProps = {
+  canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+};
+export const Live = ({ canvasRef }: LiveProps) => {
   const other = useOthers();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const broadcast = useBroadcastEvent();
@@ -155,13 +158,14 @@ export const Live = () => {
 
   return (
     <div
+      id="canvas"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       className="h-screen w-full flex items-center justify-center text-center select-none"
     >
-      <h1 className="text-2xl text-white">LiveBlocks Figma Clone</h1>
+      <canvas ref={canvasRef} />
       {reactions.map((reaction) => (
         <FlyingReaction
           key={reaction.timestamp.toString()}
