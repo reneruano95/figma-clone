@@ -159,7 +159,7 @@ export const Live = () => {
       onPointerLeave={handlePointerLeave}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
-      className="h-screen w-full flex items-center justify-center text-center"
+      className="h-screen w-full flex items-center justify-center text-center select-none"
     >
       <h1 className="text-2xl text-white">LiveBlocks Figma Clone</h1>
       {reactions.map((reaction) => (
