@@ -6,6 +6,8 @@ import {
   RoomProvider,
   ClientSideSuspense,
 } from "@liveblocks/react/suspense";
+import { LiveMap } from "@liveblocks/client";
+import Loader from "@/components/loader";
 
 export function Room({ children }: { children: ReactNode }) {
   return (
@@ -15,9 +17,17 @@ export function Room({ children }: { children: ReactNode }) {
     >
       <RoomProvider
         id="my-room"
-        initialPresence={{ cursor: null, message: "" }}
+        initialPresence={{
+          cursor: null,
+          message: "",
+          cursorColor: null,
+          editingText: false,
+        }}
+        initialStorage={{
+          canvasObjects: new LiveMap<string, any>(),
+        }}
       >
-        <ClientSideSuspense fallback={<div>Loading…</div>}>
+        <ClientSideSuspense fallback={<Loader />}>
           {children}
         </ClientSideSuspense>
       </RoomProvider>

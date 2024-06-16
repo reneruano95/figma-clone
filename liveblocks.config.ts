@@ -1,3 +1,5 @@
+import { LiveMap } from "@liveblocks/client";
+
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
 declare global {
@@ -10,12 +12,13 @@ declare global {
         y: number;
       } | null;
       message: string;
+      cursorColor: string | null;
+      editingText: boolean;
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.
     Storage: {
-      // Example, a conflict-free list
-      // animals: LiveList<string>;
+      canvasObjects: LiveMap<string, any>;
     };
 
     // Custom user info set when authenticating with a secret key
