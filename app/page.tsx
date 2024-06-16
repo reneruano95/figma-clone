@@ -1,23 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { LeftSidebar } from "@/components/left-sidebar";
 import { Live } from "@/components/live";
 import Navbar from "@/components/navbar";
+import { LeftSidebar } from "@/components/left-sidebar";
 import { RightSidebar } from "@/components/right-sidebar";
 import {
   handleCanvasMouseDown,
   handleResize,
   initializeFabric,
 } from "@/lib/canvas";
+import { ActiveElement } from "@/lib/types/type";
 
 export default function Page() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fabricRef = useRef<fabric.Canvas | null>(null);
   const isDrawing = useRef(false);
   const shapeRef = useRef<fabric.Object | null>(null);
-  const selectedShapeRef = useRef<string | null>("rectangle");
+  const selectedShapeRef = useRef<string | null>(null);
 
   useEffect(() => {
     const canvas = initializeFabric({ fabricRef, canvasRef });
@@ -36,17 +37,28 @@ export default function Page() {
     });
   }, []);
 
+  const [activeElement, setActiveElement] = useState<ActiveElement>({
+    name: "",
+    value: "",
+    icon: "",
+  });
+
+  const handleActiveElement = (element: ActiveElement) => {
+    setActiveElement(element);
+    selectedShapeRef.current = element?.value as string;
+  };
+
   return (
     <main className="h-screen overflow-hidden">
       <Navbar
-        activeElement={null}
+        activeElement={activeElement}
+        handleActiveElement={handleActiveElement}
         imageInputRef={null}
         handleImageUpload={(e) => undefined}
-        handleActiveElement={(element) => undefined}
       />
 
       <section className="h-full flex flex-row">
-        <LeftSidebar />
+        <LeftSidebar allShapes={[]} />
         <Live canvasRef={canvasRef} />
         <RightSidebar />
       </section>
