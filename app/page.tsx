@@ -24,6 +24,7 @@ import {
 } from "@liveblocks/react/suspense";
 import { defaultNavElement } from "@/lib/constants";
 import { handleDelete, handleKeyDown } from "@/lib/key-events";
+import { handleImageUpload } from "@/lib/shapes";
 
 export default function Page() {
   const redo = useRedo();
@@ -35,6 +36,7 @@ export default function Page() {
   const shapeRef = useRef<fabric.Object | null>(null);
   const selectedShapeRef = useRef<string | null>(null);
   const activeObjectRef = useRef<fabric.Object | null>(null);
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   const [activeElement, setActiveElement] = useState<ActiveElement>({
     name: "",
@@ -130,8 +132,21 @@ export default function Page() {
 
     return () => {
       canvas.dispose();
+      window.removeEventListener("resize", () => {
+        handleResize({ canvas: null });
+      });
+      window.removeEventListener("keydown", (event) => {
+        handleKeyDown({
+          e: event,
+          canvas: fabricRef.current,
+          undo,
+          redo,
+          syncShapeInStorage,
+          deleteShapeFromStorage,
+        });
+      });
     };
-  }, []);
+  }, [canvasRef]);
 
   useEffect(() => {
     renderCanvas({ fabricRef, canvasObjects, activeObjectRef });
@@ -151,8 +166,16 @@ export default function Page() {
         handleDelete(fabricRef.current as any, deleteShapeFromStorage);
         setActiveElement(defaultNavElement);
         break;
+      case "image":
+        imageInputRef.current?.click();
+        isDrawing.current = false;
+        if (fabricRef.current) {
+          fabricRef.current.isDrawingMode = false;
+        }
+        break;
 
       default:
+        selectedShapeRef.current = element?.value as string;
         break;
     }
     selectedShapeRef.current = element?.value as string;
@@ -163,8 +186,18 @@ export default function Page() {
       <Navbar
         activeElement={activeElement}
         handleActiveElement={handleActiveElement}
-        imageInputRef={null}
-        handleImageUpload={(e) => undefined}
+        imageInputRef={imageInputRef}
+        handleImageUpload={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          handleImageUpload({
+            file: e.target.files?.[0] as File,
+            canvas: fabricRef as any,
+            shapeRef,
+            syncShapeInStorage,
+          });
+        }}
       />
 
       <section className="h-full flex flex-row">
