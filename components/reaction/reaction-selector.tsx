@@ -5,7 +5,7 @@ type ReactionSelectorProps = {
 export const ReactionSelector = ({ setReaction }: ReactionSelectorProps) => {
   return (
     <div
-      className="absolute bottom-10 left-0 right-0 mx-auto w-fit transform rounded-full bg-white px-2"
+      className="absolute bottom-20 left-0 right-0 mx-auto w-fit transform rounded-full bg-white px-2"
       style={{
         boxShadow:
           "0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
