@@ -3,15 +3,9 @@ import {
   useBroadcastEvent,
   useEventListener,
   useMyPresence,
-  useOthers,
 } from "@liveblocks/react/suspense";
 
-import {
-  CursorMode,
-  CursorState,
-  Reaction,
-  ReactionEvent,
-} from "@/lib/types/type";
+import { CursorMode, CursorState, Reaction } from "@/lib/types/type";
 import useInterval from "@/lib/hooks/useInterval";
 import { LiveCursors } from "./cursor/live-cursors";
 import { CursorChat } from "./cursor/cursor-chat";
@@ -32,7 +26,6 @@ type LiveProps = {
   redo: () => void;
 };
 export const Live = ({ canvasRef, undo, redo }: LiveProps) => {
-  const other = useOthers();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const broadcast = useBroadcastEvent();
 
@@ -71,7 +64,7 @@ export const Live = ({ canvasRef, undo, redo }: LiveProps) => {
   }, 100);
 
   useEventListener((eventData) => {
-    const event = eventData.event as ReactionEvent;
+    const event = eventData.event;
     setReactions((reactions) =>
       reactions.concat([
         {
@@ -224,7 +217,7 @@ export const Live = ({ canvasRef, undo, redo }: LiveProps) => {
             }}
           />
         )}
-        <LiveCursors others={other} />
+        <LiveCursors />
         <Comments />
       </ContextMenuTrigger>
 

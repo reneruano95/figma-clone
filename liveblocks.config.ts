@@ -1,4 +1,5 @@
 import { LiveMap } from "@liveblocks/client";
+import { ReactionEvent } from "./lib/types/type";
 
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
@@ -32,11 +33,7 @@ declare global {
     };
 
     // Custom events, for useBroadcastEvent, useEventListener
-    RoomEvent: {
-      x: number;
-      y: number;
-      value: string;
-    };
+    RoomEvent: ReactionEvent;
     // Example has two events, using a union
     // | { type: "PLAY" }
     // | { type: "REACTION"; emoji: "🔥" };

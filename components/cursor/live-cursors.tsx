@@ -1,8 +1,9 @@
-import { LiveCursorProps } from "@/lib/types/type";
 import { Cursor } from "./cursor";
 import { COLORS } from "@/lib/constants";
+import { useOthers } from "@liveblocks/react/suspense";
 
-export const LiveCursors = ({ others }: LiveCursorProps) => {
+export const LiveCursors = () => {
+  const others = useOthers();
   return others.map(({ connectionId, presence }) => {
     if (!presence?.cursor) return null;
 
