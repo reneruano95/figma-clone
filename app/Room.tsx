@@ -14,6 +14,15 @@ export function Room({ children }: { children: ReactNode }) {
     <LiveblocksProvider
       publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY!}
       throttle={16}
+      resolveUsers={async ({ userIds }) => {
+        return userIds.map((userId) => ({
+          name: userId,
+          avatar: `https://ui-avatars.com/api/?name=${userId}&background=random`,
+        }));
+      }}
+      resolveMentionSuggestions={async ({ text, roomId }) => {
+        return [];
+      }}
     >
       <RoomProvider
         id="my-room"

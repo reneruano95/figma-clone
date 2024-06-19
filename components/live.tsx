@@ -17,6 +17,7 @@ import { LiveCursors } from "./cursor/live-cursors";
 import { CursorChat } from "./cursor/cursor-chat";
 import { ReactionSelector } from "./reaction/reaction-selector";
 import { FlyingReaction } from "./reaction/flying-reaction";
+import { Comments } from "./comments/comments";
 
 type LiveProps = {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
@@ -163,7 +164,7 @@ export const Live = ({ canvasRef }: LiveProps) => {
       onPointerLeave={handlePointerLeave}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
-      className="h-screen w-full flex items-center justify-center text-center select-none"
+      className=" relative h-full w-full flex flex-1 items-center justify-center select-none"
     >
       <canvas ref={canvasRef} />
       {reactions.map((reaction) => (
@@ -191,6 +192,7 @@ export const Live = ({ canvasRef }: LiveProps) => {
         />
       )}
       <LiveCursors others={other} />
+      <Comments />
     </div>
   );
 };

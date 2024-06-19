@@ -2,6 +2,7 @@
 
 import { useCallback, useRef } from "react";
 import { ThreadData } from "@liveblocks/client";
+
 import {
   useEditThreadMetadata,
   useThreads,
@@ -9,7 +10,6 @@ import {
 } from "@liveblocks/react/suspense";
 
 import { useMaxZIndex } from "@/lib/useMaxZIndex";
-
 import { PinnedThread } from "./pinned-thread";
 
 type OverlayThreadProps = {
